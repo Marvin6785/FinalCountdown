@@ -1,24 +1,17 @@
 import Categories from "../model/Categories.js";
 
-/**
- * Retrieves all categories.
- * 
- * Retrieves all categories from the database and sends a JSON response
- * with a success message and the retrieved categories.
- * 
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- */
 const getAllCategories = async (req, res) => {
     try {
+        // Appel à la méthode du modèle pour récupérer toutes les catégories
         const response = await Categories.getAllCategories();
-
+        
+        // Envoie des catégories en réponse avec un message de succès
         res.json({
             message: "Fetching all categories from API route!",
             response,
         });
-
     } catch (error) {
+        // En cas d'erreur serveur, envoie une réponse avec un statut 500 et le message d'erreur
         res.status(500).json({ 
             message: "Server error", 
             error: error.message 
@@ -26,24 +19,15 @@ const getAllCategories = async (req, res) => {
     }
 }
 
-/**
- * Retrieves a category by its ID.
- * 
- * Retrieves a category from the database based on the provided ID and sends a JSON response
- * with the retrieved category. If no category is found, responds with a 404 Not Found status.
- * 
- * @param {Object} req - The request object containing the category ID in params.
- * @param {Object} res - The response object.
- */
 const getByIdCategories = async (req, res) => {
     try {
-        const [response] = await Categories.getByIdCategories(req.params.id);
+        // Récupère la catégorie par rapport à son ID transmis en paramètre sur la route
+        const [response] = await Categories.getByIdCategories(req.params.id); // getCategoryById
+        
         if (!response)
-            return res.status(404).json({ 
-                message: "Category not found",
-            });
+            return res.status(404).json({ message: "Category not found",});
+        // Si la catégorie est trouvée, renvoie ses données
         res.json(response);
-
     } catch (error) {
         res.status(500).json({
             message: "Server error",
@@ -52,25 +36,17 @@ const getByIdCategories = async (req, res) => {
     }
 }
 
-/**
- * Adds a new category.
- * 
- * Adds a new category to the database based on the provided language and sends a JSON response
- * with a success message and the newly added category details.
- * 
- * @param {Object} req - The request object containing the category language in body.
- * @param {Object} res - The response object.
- */
 const addCategories = async (req, res) => {
-    const { language } = req.body;
+    const { language } = req.body; // Récupère le langage de la catégorie depuis le corps de la requête
 
     try {
         const response = await Categories.addCategories(language);
+        
+        // Envoie un message de succès avec la réponse contenant les détails de la catégorie ajoutée
         res.json({ 
             message: "Category successfully added",
             response,
         });
-
     } catch (error) {
         res.status(500).json({
             message: "Server error", 
@@ -79,24 +55,20 @@ const addCategories = async (req, res) => {
     }
 }
 
-/**
- * Updates a category.
- * 
- * Updates an existing category in the database based on the provided ID and new data,
- * and sends a JSON response with a success message and the updated category details.
- * 
- * @param {Object} req - The request object containing the category ID in params and updated data in body.
- * @param {Object} res - The response object.
- */
 const updateCategories = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; // Récupère l'ID de la catégorie depuis les paramètres de la requête
         const data = {
-            ...req.body,
-            id,
+            ...req.body, // Récupère les nouvelles données de la catégorie depuis le corps de la requête
+            id, // Ajoute l'ID de la catégorie
         }
+        
         const response = await Categories.updateCategories(data);
-        res.json({ message: "Category successfully updated!", response });
+        
+        res.json({ 
+            message: "Category successfully updated!", 
+            response 
+        });
     } catch (error) {
         res.status(500).json({
             message: "Server error",
@@ -105,18 +77,10 @@ const updateCategories = async (req, res) => {
     }
 }
 
-/**
- * Removes a category.
- * 
- * Removes a category from the database based on the provided ID and sends a JSON response
- * with a success message indicating the category was successfully deleted.
- * 
- * @param {Object} req - The request object containing the category ID in params.
- * @param {Object} res - The response object.
- */
 const removeCategories = async (req, res) => {
     try {
         await Categories.removeCategories(req.params.id);
+        
         res.json({ message: "Category successfully deleted!" });
     } catch (error) {
         res.status(500).json({

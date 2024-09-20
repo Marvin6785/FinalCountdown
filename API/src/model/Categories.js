@@ -1,23 +1,17 @@
 import Query from "./Query.js";
 
 class Categories {
-    /**
-     * Retrieves all categories from the database.
-     * 
-     * @returns {Promise<Array>} A promise that resolves to an array of all categories.
-     */
+
+    // Méthode statique pour récupérer toutes les catégories
     static async getAllCategories() {
+        // Définition de la requête SQL pour sélectionner toutes les catégories
         const query = `SELECT * FROM categories`;
+        // Exécution de la requête et récupération des résultats
         const response = await Query.run(query);
         return response;
     }
 
-    /**
-     * Retrieves a category by its ID.
-     * 
-     * @param {number} id - The ID of the category to retrieve.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the category details.
-     */
+    // Méthode statique pour récupérer une catégorie par son ID
     static async getByIdCategories(id) {
         const query = `
             SELECT
@@ -29,12 +23,7 @@ class Categories {
         return response;
     }
 
-    /**
-     * Adds a new category to the database.
-     * 
-     * @param {string} language - The name of the new category to add.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the insertion.
-     */
+    // Méthode statique pour ajouter une nouvelle catégorie
     static async addCategories(language) {
         const response = await Query.runWithParams(
             "INSERT INTO categories (language) VALUES (?)",
@@ -43,12 +32,7 @@ class Categories {
         return response;
     }
 
-    /**
-     * Updates an existing category in the database.
-     * 
-     * @param {Array} data - An array containing the new values and the ID of the category to update.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the update.
-     */
+    // Méthode statique pour mettre à jour une catégorie existante
     static async updateCategories(data) {
         const query = `
             UPDATE categories SET language = ?
@@ -58,12 +42,7 @@ class Categories {
         return response;
     }
 
-    /**
-     * Deletes a category from the database.
-     * 
-     * @param {number} id - The ID of the category to delete.
-     * @returns {Promise<void>} A promise indicating that the deletion is complete.
-     */
+    // Méthode statique pour supprimer une catégorie par son ID
     static async removeCategories(id) {
         const query = `DELETE FROM categories WHERE id = ?`;
         await Query.runWithParams(query, id);

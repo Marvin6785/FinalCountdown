@@ -1,23 +1,17 @@
 import Sequences from "../model/Sequences.js";
 
-/**
- * Retrieves all sequences.
- * 
- * Retrieves all sequences from the database and sends a JSON response
- * with a success message and the retrieved sequences.
- * 
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- */
 const getAllSequences = async (req, res) => {
     try {
+        // Appel à la méthode du modèle pour récupérer toutes les séquences
         const response = await Sequences.getAllSequences();
 
+        // Envoie des séquences récupérées avec un message de succès
         res.json({
             message: "Fetching all sequences from API route!",
             response,
         });
     } catch (error) {
+        // En cas d'erreur serveur, envoie une réponse avec un statut 500 et le message d'erreur
         res.status(500).json({
             message: "Server error",
             error: error.message,
@@ -25,20 +19,16 @@ const getAllSequences = async (req, res) => {
     }
 }
 
-/**
- * Retrieves a sequence by its ID.
- * 
- * Retrieves a sequence from the database based on the provided ID and sends a JSON response
- * with the retrieved sequence. If no sequence is found, responds with a 404 Not Found status.
- * 
- * @param {Object} req - The request object containing the sequence ID in params.
- * @param {Object} res - The response object.
- */
 const getByIdSequences = async (req, res) => {
     try {
+        // Récupère l'ID depuis les paramètres de la requête et appelle la méthode du modèle pour trouver la séquence
         const [response] = await Sequences.getByIdSequences(req.params.id);
+
+        // Si la séquence n'est pas trouvée, renvoie une réponse 404 (non trouvée)
         if (!response)
             return res.status(404).json({ message: "Sequence not found" });
+
+        // Si la séquence est trouvée, renvoie ses données
         res.json(response);
     } catch (error) {
         res.status(500).json({
@@ -48,31 +38,18 @@ const getByIdSequences = async (req, res) => {
     }
 }
 
-/**
- * Adds a new sequence.
- * 
- * Adds a new sequence to the database based on the provided data and sends a JSON response
- * with a success message and the newly added sequence details.
- * 
- * @param {Object} req - The request object containing the sequence data in body.
- * @param {Object} res - The response object.
- */
 const addSequences = async (req, res) => {
-    try {
-        // upload(req, res, async function (error) {
-        //     if (error) {
-        //         return res.status(400).json({ message: error });
-        //     }
-            
-            const response = await Sequences.addSequences();
+    try {    
+        // Crée une nouvelle séquence en utilisant la méthode du modèle
+        const response = await Sequences.addSequences();
 
-            if (response) {
-                res.json({
-                    message: "Data inserted successfully!",
-                    response,
-                });
-            }
-        // });
+        // Si l'ajout est réussi, envoie un message de succès avec les détails de la séquence ajoutée
+        if (response) {
+            res.json({
+                message: "Data inserted successfully!",
+                response,
+            });
+        }
     } catch (error) {
         res.status(500).json({
             message: "Server error",
@@ -81,25 +58,21 @@ const addSequences = async (req, res) => {
     }
 }
 
-/**
- * Updates a sequence.
- * 
- * Updates an existing sequence in the database based on the provided ID and new data,
- * and sends a JSON response with a success message and the updated sequence details.
- * 
- * @param {Object} req - The request object containing the sequence ID in params and updated data in body.
- * @param {Object} res - The response object.
- */
 const updateSequences = async (req, res) => {
     try {
+        // Récupère l'ID de la séquence depuis les paramètres de la requête
         const { id } = req.params;
         
+        // Crée un objet contenant les données mises à jour de la séquence
         const data = {
             ...req.body,
             id,
         }
+
         const response = await Sequences.updateSequences(data);
-        res.json({ message: "Data updated successfully!", response});
+
+        // Envoie un message de succès avec les détails de la séquence mise à jour
+        res.json({ message: "Data updated successfully!", response });
     } catch (error) {
         res.status(500).json({
             message: "Server error",
@@ -108,18 +81,10 @@ const updateSequences = async (req, res) => {
     }
 }
 
-/**
- * Removes a sequence.
- * 
- * Removes a sequence from the database based on the provided ID and sends a JSON response
- * with a success message indicating the sequence was successfully deleted.
- * 
- * @param {Object} req - The request object containing the sequence ID in params.
- * @param {Object} res - The response object.
- */
 const removeSequences = async (req, res) => {
     try {
         await Sequences.removeSequences(req.params.id);
+
         res.json({ message: "Sequence deleted successfully!" });
     } catch (error) {
         res.status(500).json({

@@ -1,11 +1,8 @@
 import Query from "./Query.js";
 
 class Users {
-    /**
-     * Retrieves all users from the database.
-     * 
-     * @returns {Promise<Array>} A promise that resolves to an array of all users with their associated roles.
-     */
+
+    // Récupère tous les utilisateurs et leurs rôles associés
     static async getAllUsers() {
         const query = `
             SELECT
@@ -15,16 +12,12 @@ class Users {
             INNER JOIN roles
                 ON roles.id = users.role_id
         `;
+        // Exécute la requête et renvoie tous les utilisateurs
         const response = await Query.run(query);
         return response;
     }
 
-    /**
-     * Retrieves a user by their ID.
-     * 
-     * @param {number} id - The ID of the user to retrieve.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the user's details and their associated role.
-     */
+    // Récupère un utilisateur par son ID
     static async getByIdUsers(id) {
         const query = `
             SELECT
@@ -35,85 +28,65 @@ class Users {
                 ON roles.id = users.role_id
             WHERE users.id = ?
         `;
+        // Exécute la requête avec l'ID et renvoie l'utilisateur correspondant
         const response = await Query.runWithParams(query, id);
         return response;
     }
 
-    /**
-     * Retrieves a user by their email.
-     * 
-     * @param {string} email - The email of the user to retrieve.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the user's details.
-     */
+    // Récupère un utilisateur par son email
     static async getByEmailUsers(email) {
         const query = `
             SELECT *
             FROM users
             WHERE email = ?
         `;
+        // Exécute la requête avec l'email et renvoie l'utilisateur trouvé
         const response = await Query.runWithParams(query, email);
-        console.log(response);
         return response;
     }
 
-    /**
-     * Adds a new user to the database.
-     * 
-     * @param {Array} newUser - An array containing the nickname, email, and password of the new user.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the insertion.
-     */
+    // Ajoute un nouvel utilisateur dans la base de données
     static async addUsers(newUser) {
         const query = `
             INSERT INTO users (nickname, email, password) 
             VALUES (?, ?, ?)
         `;
+        // Exécute la requête avec les infos du nouvel utilisateur
         const response = await Query.runWithParams(query, newUser);
         return response;
     }
 
-    /**
-     * Updates an existing user in the database.
-     * 
-     * @param {Array} data - An array containing the new nickname, email, password, and the ID of the user to update.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the update.
-     */
+    // Met à jour les infos d'un utilisateur
     static async updateUsers(data) {
         const query = `
             UPDATE users
             SET nickname = ?, email = ?, password = ?
             WHERE id = ?
         `;
+        // Exécute la requête avec les nouvelles données de l'utilisateur
         const response = await Query.runWithParams(query, data);
         return response;
     }
 
-    /**
-     * Deletes a user from the database.
-     * 
-     * @param {number} id - The ID of the user to delete.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the deletion.
-     */
+    // Supprime un utilisateur par son ID
     static async removeUsers(id) {
         const query = `
             DELETE FROM users
             WHERE id = ?
         `;
+        // Exécute la requête pour supprimer l'utilisateur
         const response = await Query.runWithParams(query, id);
         return response;
     }
 
-    /**
-     * Updates the last connection time of a user.
-     * 
-     * @param {number} id - The ID of the user to update.
-     * @returns {Promise<Object>} A promise that resolves to an object containing the result of the update.
-     */
+    // Met à jour la dernière connexion d'un utilisateur
     static async updateLastConnection(id) {
         const query = `
             UPDATE users 
             SET last_connection = NOW() 
             WHERE id = ? 
         `;
+        // Exécute la requête pour mettre à jour la date de dernière connexion
         const response = await Query.runWithParams(query, id);
         return response;
     }

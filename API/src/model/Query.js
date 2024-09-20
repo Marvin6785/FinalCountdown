@@ -1,26 +1,21 @@
 import pool from "../config/db.js";
 
 class Query {
-    /**
-     * Executes a SQL query without parameters.
-     * 
-     * @param {string} query - The SQL query to execute.
-     * @returns {Promise<Array>} A promise that resolves to the result of the query.
-     */
+
+    // Méthode statique pour exécuter une requête SQL sans paramètres
     static async run(query) {
+        // Exécution de la requête en utilisant le pool de connexions à la base de données
         const [result] = await pool.query(query);
+        // Retourne les résultats de la requête
         return result;
     }
 
-    /**
-     * Executes a SQL query with parameters.
-     * 
-     * @param {string} query - The SQL query to execute.
-     * @param {Object} data - An object containing the parameters for the query.
-     * @returns {Promise<Array>} A promise that resolves to the result of the query.
-     */
-    static async runWithParams(query, data) {  
+    // Méthode statique pour exécuter une requête SQL avec des paramètres
+    static async runWithParams(query, data) {
+        // Exécution de la requête avec des paramètres, sécurisée contre les injections SQL
+        // Utilisation de Object.values(data) pour convertir un objet en tableau de valeurs
         const [result] = await pool.execute(query, Object.values(data));
+        // Retourne les résultats de la requête
         return result;
     }
 }

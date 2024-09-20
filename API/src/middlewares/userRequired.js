@@ -1,18 +1,12 @@
-/**
- * Middleware to check if the user is logged in.
- * 
- * This middleware checks if the user is authenticated through session.
- * If the user is not logged in, it sends a 403 Forbidden response with an appropriate message.
- * Otherwise, it allows the request to proceed to the next middleware or route handler.
- * 
- * @param {Object} req - The request object, containing session information.
- * @param {Object} res - The response object, used to send a response if the user is not logged in.
- * @param {Function} next - The next middleware or route handler to be executed if the user is logged in.
- */
+// Middleware pour vérifier si l'utilisateur est connecté
 export default (req, res, next) => {
+    // Vérifie si l'utilisateur est connecté en examinant la présence d'une session utilisateur
     if (!req.session.user) {
+        // Si l'utilisateur n'est pas connecté, renvoie une réponse avec un statut 403 et un message d'erreur
         res.status(403).json({ message: "You must be logged in to perform this action!" });
-        return;
+        return; // Interrompt l'exécution du middleware et la réponse est envoyée
     }
+
+    // Si l'utilisateur est connecté, passe au middleware suivant dans la chaîne
     next();
 }

@@ -1,24 +1,18 @@
 import Responses from "../model/Responses.js";
 
-/**
- * Retrieves all responses.
- * 
- * Retrieves all responses from the database and sends a JSON response
- * with a success message and the retrieved responses.
- * 
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- */
 const getAllResponses = async (req, res) => {
-    try {        
+    try {
+        // Appel à la méthode du modèle pour récupérer toutes les réponses
         const response = await Responses.getAllResponses();
 
+        // Envoie des réponses récupérées avec un message de succès
         res.json({
             message: "Fetching all responses from API route!",
             response,
         });
         
     } catch (error) {
+        // En cas d'erreur serveur, envoie une réponse avec un statut 500 et le message d'erreur
         res.status(500).json({
             message: "Server error",
             error: error.message,
@@ -26,20 +20,16 @@ const getAllResponses = async (req, res) => {
     }
 }
 
-/**
- * Retrieves a response by its ID.
- * 
- * Retrieves a response from the database based on the provided ID and sends a JSON response
- * with the retrieved response. If no response is found, responds with a 404 Not Found status.
- * 
- * @param {Object} req - The request object containing the response ID in params.
- * @param {Object} res - The response object.
- */
 const getByIdResponses = async (req, res) => {
-    try {        
+    try {
+        // Récupère l'ID depuis les paramètres de la requête et appelle la méthode du modèle pour trouver la réponse
         const [response] = await Responses.getByIdResponses(req.params.id);
+
+        // Si la réponse n'est pas trouvée, renvoie une réponse 404 (non trouvée)
         if (!response)
             return res.status(404).json({ message: "Response not found" });
+
+        // Si la réponse est trouvée, renvoie ses données
         res.json(response);
         
     } catch (error) {

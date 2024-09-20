@@ -7,7 +7,7 @@ import Home from "../views/user/Home";
 // import Dashboard from "../views/user/Dashboard";
 // import Deck from "../views/user/Deck";
 import Footer from "../views/user/partials/Footer";
-// import ProtectedRouter from "../hoc/ProtectedRouter";
+import ProtectedRouter from "../hoc/ProtectedRouter";
 
 function Router() {
     return (
