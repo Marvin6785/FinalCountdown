@@ -17,7 +17,7 @@ function MenuProvider({ children }) {
     );
 }
 
-MenuProvider.PropTypes = {
+MenuProvider.propTypes = {
     children: PropTypes.node.isRequired,
 }
 

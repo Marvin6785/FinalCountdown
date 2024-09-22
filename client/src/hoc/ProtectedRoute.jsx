@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "..hooks/UseUser";
+import { useUser } from "../hooks/UseUser";
 
 function ProtectedRoute({ component: Component }) {
     const { user } = useUser();
@@ -18,7 +18,7 @@ function ProtectedRoute({ component: Component }) {
     }
 }
 
-ProtectedRoute.PropTypes = {
+ProtectedRoute.propTypes = {
     component: PropTypes.elementType.isRequired,
 };
 

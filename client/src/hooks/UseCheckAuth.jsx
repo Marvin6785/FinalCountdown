@@ -24,7 +24,7 @@ function useCheckAuth() {
                     const data = await response.json();
                     login(data.user);
                 } else {
-                    console.log(`Server error: ${response.satus}`);
+                    console.log(`Server error: ${response.status}`);
                 }
             } catch (error) {
                 console.log(`Fetch error: ${error.message}`);
@@ -40,4 +40,4 @@ function useCheckAuth() {
     return [user, isLoading];
 }
 
-export {useCheckAuth};
+export { useCheckAuth };

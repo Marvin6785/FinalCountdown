@@ -57,6 +57,10 @@ function AddCards() {
             const response = await fetch(
                 "http://localhost:9000/api/v1/flashcard"
             )
+        } catch (error) {
+            console.log(error);
         }
     }
 }
+
+export default AddCards;

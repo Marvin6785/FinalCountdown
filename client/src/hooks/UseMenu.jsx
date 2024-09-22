@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-// import { Context } from "../store/menu/Context";
+import { Context } from "../store/menu/Context";
 
 function UseMenu() {
     const { isMenuOpen, toggleMenu } = useContext(Context);

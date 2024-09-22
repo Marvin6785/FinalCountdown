@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
+    "dev_3wa": "NODE_ENV=3wa_cloud nodemon src/server.js",
     "dev": "nodemon src/server.js"
   },
   "keywords": [],

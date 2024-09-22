@@ -1,14 +1,14 @@
 import { NavLink, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faBars,
-    faUser,
-    faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//     faBars,
+//     faUser,
+//     faXmark,
+// } from "@fortawesome/free-solid-svg-icons";
 
 import { useUser } from "../../../hooks/UseUser";
 import useMenu from "../../../hooks/UseMenu";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/FlashCardMaster_transparent.webp";
 
 function Header() {
     const { user, logout } = useUser();
@@ -18,9 +18,9 @@ function Header() {
         <header>
             {isMenuOpen && <div className="overlayOn" onClick={toggleMenu} />}
             <div>
-                <button onClick={toggleMenu}>
+                {/* <button onClick={toggleMenu}>
                     <FontAwesomeIcon icon={faBars} />
-                </button>
+                </button> */}
                 <h1>
                     <Link to={"/"}>
                         <img src={logo} />
