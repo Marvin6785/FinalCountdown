@@ -1,4 +1,4 @@
-import { useCheckAuth } from "./hooks/UseCheckAuth";
+import { useCheckAuth } from "./hooks/useCheckAuth";
 
 import UserRouter from "./router/UserRouter";
 import AdminRouter from "./router/AdminRouter";
